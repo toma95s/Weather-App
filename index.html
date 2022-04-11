@@ -28,8 +28,8 @@
             <div class="col-md-4 searchCity">
                 <label>Search for a city:</label>
                 <form class="form-inline">
-                    <input type="text" class="form-control" placeholder="Search for your city"></input>
-                    <button class="searchBtn">Search</button>
+                    <input type="text" id="citySearch" class="form-control" placeholder="Search for your city"></input>
+                    <button class="searchBtn" id="searchButton">Search</button>
                 </form>
                 <div class="card">
                     <ul class="list-group-flush" id="cityHistory"></ul>
@@ -39,6 +39,7 @@
                     <div class="row" id="currentWeather">
                         <div class="col-md-12">
                             <h2 class="currentCity" id="currentCity"></h2>
+                            <h6 class="currentTime" id="currentTime"></h6>
                             <p id="temperature"></p>
                             <p id="humidity"></p>
                             <p id="windSpeed"></p>
@@ -49,7 +50,7 @@
                         <h2>5-Day Forecast:</h2>
                     </div>
                     <div class="row" id="5DayCast">
-                        
+
                     </div>
                 </div>
             </div>
