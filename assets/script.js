@@ -56,7 +56,7 @@ $("#searchButton").click(function(event){
 
 
 function currentCityWeather(cities){
-    var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=${cities}&appid=${apiKey}=imperial&units=imperial';
+    var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'& lon='+long+'&appid='+apiKey;
 
     $.ajax({
         URL: currentWeatherURL,
@@ -69,11 +69,13 @@ function currentCityWeather(cities){
         //get the current date
         var currentDate = moment().format('L');
         var weatherIcon = result.weather[0].icon;
-        var weatherIconUrl = 'http://openweathermap.org/img/wn/${weatherIcon}.png';
+        var weatherIconUrl = 'https://openweathermap.org/img/wn/${weatherIcon}.png';
 
         //dynamically create the html elmenets
-
+        //console did not like this check below have to do something else.
         //var currentCity =$(<h2 id ="currentCity">${result.name}</h2>);
+
+        var currentCity = $("<h2>").text(result.name);
         var newCurrentDate =$("<h6>").text(currentDate);
 
         var temperature = $("<p>").text("Temperature: " + result.main.temp + "</p>");
@@ -91,15 +93,16 @@ function currentCityWeather(cities){
         //a function for the UV Index
     var lat = result.coord.lat;
     var long = result.coord.lon;    
-    var currentWeatherUVUrl = 'https://openweathermap.org/api/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}';
+    var currentWeatherUVUrl = 'https://openweathermap.org/api/uvi?lat='+lat+'&lon='+long+'&appid='+apiKey;
 
     $.ajax({
         url: currentWeatherUVUrl,
         method: 'GET'
     }).then(function(uviresult){
-        var uvIndex = $(<p>
+        var uvIndex = $("<p>").text("")
+        /*var uvIndex = $(<p>
             <span id="indexColor">${uviresult.value}</span>
-        </p>);
+        </p>);*/
         $("#cityDetails").append(uvIndex);
         
         //need to do if/statements for the colors
@@ -125,7 +128,7 @@ function currentCityWeather(cities){
 
 //a function for the forecast
 function forecast(lat,long){
-    var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={apiKey}";
+    var fiveDayURL = 'https://api.openweathermap.org/data/2.5/forecast?lat'+lat+'&lon='+long+'&appid='+apiKey;
 
     $.ajax({
         URL: fiveDayURL,
@@ -145,16 +148,16 @@ function forecast(lat,long){
                 humidity: fiveDayResult.daily[i].humidity
             }
         }
-        var weatherIconUrl = <img src = "http://openweathermap.org/img/wn/${info.icon}.png" />
+        //var weatherIconUrl = <img src = "http://openweathermap.org/img/wn/${info.icon}.png" />
         var fifthDate = moment().format('L');
-        var fiveDayForecastDisplay = $(
+        var fiveDayForecastDisplay = /*$(
             <div class = "card-body">
             <h6>${fifthDate}</h6>
             <p>${weatherIconUrl}</p>
             <p>Temp: ${info.temperature}</p>
             <p>Humidity: ${info.humidity}</p>
             </div>
-        )
+        )*/
 
         $("#5DayCast").append(fiveDayForecastDisplay)
     });
