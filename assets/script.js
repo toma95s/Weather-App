@@ -74,19 +74,41 @@ function currentCityWeather(cities){
         $("#cityDetails").empty();
         //get the current date
         var currentDate = moment().format('L');
-
+        var weatherIcon = result.weather[0].icon;
+        var weatherIconUrl = 'http://openweathermap.org/img/wn/${weatherIcon}.png';
 
         //dynamically create the html elmenets
 
-        var currentCity =$("<h2>").text(result.name);
+        var currentCity =$(<h2  id ="currentCity">${result.name} <img src="${weatherIconUrl}"></img>
+        </h2>);
         var newCurrentDate =$("<h6>").text(currentDate);
 
         var temperature = $("<p>").text("Temperature: " + result.main.temp + "</p>");
         var humidity = $("<p>").text("Humidity: " + result.main.humidity + "</p>");
         var windSpeed = $("<p>").text("Wind Speed:" + result.main.wind.speed + "</p>");
 
-        var weatherIcon = result.weather[0].main ;
+        $("#cityDetails").append(currentCity);
+        $("#cityDetails").append(newCurrentDate);
+        $("#cityDetails").append(temperature);
+        $("#cityDetails").append(humidity);
+        $("#cityDetails").append(windSpeed);
 
+        //need another url for currentweather UV 
+        //lat and long required to use this api
+        //a function for the UV Index
+    var lat = result.coord.lat;
+    var long = result.coord.lon;    
+    var currentWeatherUVUrl = 'https://openweathermap.org/api/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}';
+
+    $.ajax({
+        url: currentWeatherUVUrl,
+        method: 'GET'
+    }).then(function(result){
+        var uvIndex = $(<p id="UVIndex">${result.value}</p>)
+
+        $('#UVIndex').empty();
+        $('#UVIndex').html(uvIndex);
+    })
 
     })
 }
@@ -96,7 +118,6 @@ function currentCityWeather(cities){
 
 //a function for the forecast
 
-//a function for the UV Index
 
 //need to get current weather if not in storage
 
