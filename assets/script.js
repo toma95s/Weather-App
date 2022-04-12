@@ -73,8 +73,7 @@ function currentCityWeather(cities){
 
         //dynamically create the html elmenets
 
-        var currentCity =$(<h2  id ="currentCity">${result.name} <img src="${weatherIconUrl}"></img>
-        </h2>);
+        //var currentCity =$(<h2 id ="currentCity">${result.name}</h2>);
         var newCurrentDate =$("<h6>").text(currentDate);
 
         var temperature = $("<p>").text("Temperature: " + result.main.temp + "</p>");
@@ -118,12 +117,48 @@ function currentCityWeather(cities){
             
         };
     });
-
+    forecast(lat,long);
     });
 };
 //need to use local storage to store the searches
 
 
+//a function for the forecast
+function forecast(lat,long){
+    var fiveDayURL = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={apiKey}";
+
+    $.ajax({
+        URL: fiveDayURL,
+        method: 'GET'
+    }).then(function(fiveDayResult){
+        //need to store the array of 5 days in a variable
+
+        var forecastFive = fiveDayResult.list;
+
+        $("#5dayCast").empty();
+       
+        for(let i = 1; i < fiveDayResult.length; i++){
+            var info = {
+                date: fiveDayResult.daily[i].dt,
+                icon: fiveDayResult.daily[i].weather[0].icon,
+                temperature:  fiveDayResult.daily[i].temp,
+                humidity: fiveDayResult.daily[i].humidity
+            }
+        }
+        var weatherIconUrl = <img src = "http://openweathermap.org/img/wn/${info.icon}.png" />
+        var fifthDate = moment().format('L');
+        var fiveDayForecastDisplay = $(
+            <div class = "card-body">
+            <h6>${fifthDate}</h6>
+            <p>${weatherIconUrl}</p>
+            <p>Temp: ${info.temperature}</p>
+            <p>Humidity: ${info.humidity}</p>
+            </div>
+        )
+
+        $("#5DayCast").append(fiveDayForecastDisplay)
+    });
+}
 
 
 ////need a function to show city history
@@ -131,7 +166,6 @@ function cityHistory(){
 
 }
 
-//a function for the forecast
 
 
 //need to get current weather if not in storage
