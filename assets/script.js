@@ -55,12 +55,6 @@ $("#searchButton").click(function(event){
 
 
 
-
-////need a function to show city history
-function cityHistory(){
-
-}
-
 function currentCityWeather(cities){
     var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q=${cities}&appid=${apiKey}=imperial&units=imperial';
 
@@ -103,25 +97,44 @@ function currentCityWeather(cities){
     $.ajax({
         url: currentWeatherUVUrl,
         method: 'GET'
-    }).then(function(result){
-        var uvIndex = $(<p id="UVIndex">${result.value}</p>)
+    }).then(function(uviresult){
+        var uvIndex = $(<p>
+            <span id="indexColor">${uviresult.value}</span>
+        </p>);
+        $("#cityDetails").append(uvIndex);
+        
+        //need to do if/statements for the colors
 
-        $('#UVIndex').empty();
-        $('#UVIndex').html(uvIndex);
-    })
+        if(uviresult.value < 3){
+            $("#indexColor").css("background-color","green").css("color","black");
 
-    })
-}
+        }
+        else if(uviresult.value >= 3 && uviresult.value < 7){
+            $("#indexColor").css("background-color","yellow").css("color","black");
+            
+        }
+        else if(uviresult.value >= 7){
+            $("#indexColor").css("background-color","red").css("color","black");
+            
+        };
+    });
+
+    });
+};
 //need to use local storage to store the searches
 
-//need a function for the API
+
+
+
+////need a function to show city history
+function cityHistory(){
+
+}
 
 //a function for the forecast
 
 
 //need to get current weather if not in storage
-
-//will need an if/else statement for the colors
 
 
 //need another if statement if city clicked 
