@@ -39,6 +39,7 @@ const apiKey = "58d56143837e18e5352b2e203d75f67f";
 //$("#currentDate").html(currentDay);
 //going to put the current day in the current City function
 
+//need a const lat and long API so will use GEO coordinates
 
 //need an array to put in 
 //will need a function for search button
@@ -47,16 +48,12 @@ $("#searchButton").click(function(event){
     event.preventDefault();
     let citySearch = $("#citySearch").val();
     //need to call the functions to return the value 
-    currentCityWeather(citySearch);
+    //currentCityWeather(citySearch);
     //of current weather and forecast
+
+     let cityName;
     
-    
-})
-
-
-
-function currentCityWeather(cities){
-    var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?lat='+lat+'& lon='+long+'&appid='+apiKey;
+    var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+apiKey;
 
     $.ajax({
         URL: currentWeatherURL,
@@ -122,7 +119,94 @@ function currentCityWeather(cities){
     });
     forecast(lat,long);
     });
-};
+});
+    
+/*
+function geoCoordinates(){
+      var geoCoordinate = 'https://api.openweathermap.org/geo/1.0/direct?q='+citySearch+'&appid='+ apiKey;
+     $.ajax({
+         URL:geoCoordinate,
+         method:"GET"
+     }).then(function(coordinate){
+         const lat = coordinate.coord.lat;
+         const long = coordinate.coord.lon;
+        
+       
+     })
+}
+*/
+
+/*
+function currentCityWeather(cityName){
+    let cityName;
+    
+    var currentWeatherURL = 'https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid='+apiKey;
+
+    $.ajax({
+        URL: currentWeatherURL,
+        method: "GET"
+    }).then(function(result){
+        console.log(result);
+        console.log(currentWeatherURL);
+        //empty all of the city weather details
+        $("#cityDetails").empty();
+        //get the current date
+        var currentDate = moment().format('L');
+        var weatherIcon = result.weather[0].icon;
+        var weatherIconUrl = 'https://openweathermap.org/img/wn/${weatherIcon}.png';
+
+        //dynamically create the html elmenets
+        //console did not like this check below have to do something else.
+        //var currentCity =$(<h2 id ="currentCity">${result.name}</h2>);
+
+        var currentCity = $("<h2>").text(result.name);
+        var newCurrentDate =$("<h6>").text(currentDate);
+
+        var temperature = $("<p>").text("Temperature: " + result.main.temp + "</p>");
+        var humidity = $("<p>").text("Humidity: " + result.main.humidity + "</p>");
+        var windSpeed = $("<p>").text("Wind Speed:" + result.main.wind.speed + "</p>");
+
+        $("#cityDetails").append(currentCity);
+        $("#cityDetails").append(newCurrentDate);
+        $("#cityDetails").append(temperature);
+        $("#cityDetails").append(humidity);
+        $("#cityDetails").append(windSpeed);
+
+        //need another url for currentweather UV 
+        //lat and long required to use this api
+        //a function for the UV Index
+    var lat = result.coord.lat;
+    var long = result.coord.lon;    
+    var currentWeatherUVUrl = 'https://openweathermap.org/api/uvi?lat='+lat+'&lon='+long+'&appid='+apiKey;
+
+    $.ajax({
+        url: currentWeatherUVUrl,
+        method: 'GET'
+    }).then(function(uviresult){
+        var uvIndex = $("<p>").text("")
+        /*var uvIndex = $(<p>
+            <span id="indexColor">${uviresult.value}</span>
+        </p>);
+        $("#cityDetails").append(uvIndex);
+        
+        //need to do if/statements for the colors
+
+        if(uviresult.value < 3){
+            $("#indexColor").css("background-color","green").css("color","black");
+
+        }
+        else if(uviresult.value >= 3 && uviresult.value < 7){
+            $("#indexColor").css("background-color","yellow").css("color","black");
+            
+        }
+        else if(uviresult.value >= 7){
+            $("#indexColor").css("background-color","red").css("color","black");
+            
+        };
+    });
+    forecast(lat,long);
+    });
+};*/
 //need to use local storage to store the searches
 
 
