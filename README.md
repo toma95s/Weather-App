@@ -6,6 +6,20 @@ https://toma95s.github.io/WeatherApp/ <br>
 As a traveler you can utilize this application to get you the desired city's weather so you can prepare well in advanced for any alarming weather.
 
 
+
+	https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white
+
+    https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white
+
+    	https://img.shields.io/badge/Zoom-2D8CFF?style=for-the-badge&logo=zoom&logoColor=white
+
+
+	https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E
+
+    https://img.shields.io/badge/json-5E5C5C?style=for-the-badge&logo=json&logoColor=white
+
+    
+
 # WeatherApp
 
 User Story
