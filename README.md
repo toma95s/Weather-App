@@ -8,6 +8,11 @@ As a traveler you can utilize this application to get you the desired city's wea
 <img width="50" alt ="slack badge" src ="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
 
 
+![https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white]
+
+
+
+
 # WeatherApp
 
 User Story
