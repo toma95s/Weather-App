@@ -1,4 +1,4 @@
-//use moments for days
+
 var startDate = moment().format('M/DD/YYYY');  
 var day1 = moment().add(1, 'days').format('M/DD/YYYY');
 var day2 = moment().add(2, 'days').format('M/DD/YYYY');
@@ -21,6 +21,7 @@ $("#basic-text1").on("click", function(event) {
 
 function showWeather(cityInput) {
 
+  
   $("#dailyWeather").empty();
   $("#fiveDay").empty();
   $("#day1").empty();
@@ -29,6 +30,7 @@ function showWeather(cityInput) {
   $("#day4").empty();
   $("#day5").empty();
 
+  
   var oneDay ="https://api.openweathermap.org/data/2.5/weather?q=" 
   + cityInput + "&units=imperial" + "&APPID=ddd07af3f68929edbfbdc2e6fbe8b772";
   console.log("oneDay", oneDay);  
@@ -39,11 +41,12 @@ function showWeather(cityInput) {
       method: "GET",
   }).then(function(response) {
 
-
+    
     var iconUrl = "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png"; //icon url 
-    var lat = response.coord.lat; 
-    var lon = response.coord.lon; 
+    var lat = response.coord.lat; // Latiude 
+    var lon = response.coord.lon; // Longitude 
   
+    
     $("#dailyWeather").append(
       "<div class='col s12 m6'>"
       +  "<h2 class='daily'>" + response.name + " (" + startDate + ")" + "&nbsp" + "<img src='" + iconUrl  + "'>" + "</h2>"
@@ -53,14 +56,17 @@ function showWeather(cityInput) {
       + "</div>"
       ); 
 
+  
   var fiveDay = "https://api.openweathermap.org/data/2.5/onecall?" 
   + "lat=" + lat + "&lon=" + lon + "&units=imperial" + "&APPID=ddd07af3f68929edbfbdc2e6fbe8b772";  
     console.log("fiveDay", fiveDay);
 
+   
   $.ajax({
     url: fiveDay,
     method: "GET",
     }).then(function(response) {
+      
       
       var iconUrl1 = "http://openweathermap.org/img/w/" + response.daily[0].weather[0].icon + ".png";
       var iconUrl2 = "http://openweathermap.org/img/w/" + response.daily[1].weather[0].icon + ".png";
@@ -68,13 +74,14 @@ function showWeather(cityInput) {
       var iconUrl4 = "http://openweathermap.org/img/w/" + response.daily[3].weather[0].icon + ".png";
       var iconUrl5 = "http://openweathermap.org/img/w/" + response.daily[4].weather[0].icon + ".png";
    
+      
       $("#dailyWeather").append(
         "<div class='col s12 m6'>"
        + "<button class='w3-button' id='uvIndex' class='daily'>" + "UV Index: " + response.current.uvi + "</button>"
        + "</div>"
        ); 
 
-
+      
       if (response.current.uvi <= 2) {
         $("#uvIndex").addClass("green");
        } else if (response.current.uvi <= 5) {
@@ -87,13 +94,13 @@ function showWeather(cityInput) {
            $("#uvIndex").addClass("purple");
        };
 
-
+      
       $("#fiveDay").append(
         "<div class='col-md-12'>"
        + "<h2 id='fiveDay'>" + "5-Day Forecast:" + "</h2>" 
       ); 
 
-   
+       
       $("#day1").append(
        "<div class='fiveDayCard card col s12 m6'>"
        +  "<div class='card-body'>"
@@ -104,6 +111,9 @@ function showWeather(cityInput) {
        + "</div>" 
       ); 
 
+
+      
+      
       $("#day2").append(
         "<div class='fiveDayCard card col s12 m6'>"
         +  "<div class='card-body'>"
@@ -114,7 +124,7 @@ function showWeather(cityInput) {
         + "</div>" 
       ); 
 
-
+      
       $("#day3").append(
         "<div class='fiveDayCard card col s12 m6'>"
         +  "<div class='card-body'>"
@@ -125,7 +135,7 @@ function showWeather(cityInput) {
         + "</div>" 
       ); 
 
-
+      
       $("#day4").append(
         "<div class='fiveDayCard card col s12 m6'>"
         +  "<div class='card-body'>"
@@ -145,26 +155,25 @@ function showWeather(cityInput) {
         +  "<div class='card-text'>" + "Temp: " + response.daily[4].temp.day + " °F" + "</div>"
         +  "<div class='card-text'>" + "Humidity: " + response.daily[4].humidity + "%" + "</div>" 
         + "</div>" 
-      );
+      ); 
       
       showCities(); 
-      })  
+      }) 
     }) 
   } 
 
+
 function showCities() {
-  $("#cityButtons").empty();  
-  var arrayFromStorage = JSON.parse(localStorage.getItem("allCities")) || []; /
+  $("#cityButtons").empty(); 
+  var arrayFromStorage = JSON.parse(localStorage.getItem("allCities")) || []; 
   var arrayLength = arrayFromStorage.length; 
 
   for (var i = 0; i < arrayLength; i++) { 
     var cityNameFromArray = arrayFromStorage[i]; 
 
     $("#cityButtons").append (
-
       "<div class='list-group'>"
   
-
     + "<button class='list-group-item'>" + cityNameFromArray 
     + "</button>")
   } 
@@ -172,11 +181,9 @@ function showCities() {
 
 showCities (); 
 
-
 $("#cityButtons").on("click", ".list-group-item", function(event) {
   event.preventDefault();
   var cityInput = ($(this).text());
   showWeather(cityInput); 
 }) 
-
  
